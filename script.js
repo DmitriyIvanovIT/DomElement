@@ -25,10 +25,38 @@ DomElement.prototype.createBlock = function () {
     elem.style.width = this.width + 'px';
     elem.style.backgroundColor = this.bg;
     elem.style.fontSize = this.fontSize + 'px';
+    elem.style.display = 'flex';
+    elem.style.alignItems = 'center';
+    elem.style.justifyContent = 'center';
+    elem.style.position ='absolute';
     elem.textContent = 'Привет';
+
     body.append(elem);
 };
+DomElement.prototype.drive = function() {
+    let elem = document.querySelector(this.selector),
+    left = 0, up = 0;
+
+    body.addEventListener('keydown', function(event) {
+        if (event.code === 'ArrowRight') {
+            left += 10;
+            elem.style.left = left + 'px'; 
+        } else if (event.code === 'ArrowLeft') {
+            left -= 10;
+            elem.style.left = left + 'px'; 
+        } else if (event.code === 'ArrowDown') {
+            up += 10;
+            elem.style.top = up + 'px';
+        } else if (event.code === 'ArrowUp') {
+            up -= 10;
+            elem.style.top = up + 'px';
+        }
+    });
+}
 
 let obj = new DomElement('.block', 100, 200, '#4285f4', 20);
 
-obj.createBlock();
+document.addEventListener('DOMContentLoaded', function() {
+    obj.createBlock();
+    obj.drive();
+});
